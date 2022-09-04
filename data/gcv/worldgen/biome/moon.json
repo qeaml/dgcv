@@ -1,0 +1,19 @@
+{
+  "precipitation": "none",
+  "temperature": 0,
+  "temperature_modifier": "frozen",
+  "downfall": 0.85,
+  "creature_spawn_probability": 0,
+  "effects": {
+    "fog_color": 7434609,
+    "sky_color": 0,
+    "water_color": 0,
+    "water_fog_color": 0
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {
+    "air": ["gcv:moon_crater"]
+  },
+  "features": []
+}

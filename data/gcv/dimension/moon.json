@@ -1,0 +1,26 @@
+{
+  "type": "gcv:planet",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:stone",
+          "height": 255
+        }
+      ],
+      "structure_overrides": [],
+      "biome": "gcv:moon",
+      "features": false,
+      "lakes": false
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "gcv:moon"
+    }
+  }
+}

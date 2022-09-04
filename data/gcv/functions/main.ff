@@ -1,0 +1,40 @@
+# To turn this file into executable mcfunction files, use ff from the tools
+# folder!
+
+const
+  spset = scoreboard players set
+  spadd = scoreboard players add
+  sprem = scoreboard players remove
+
+  sorem = scoreboard objectives remove
+  soadd = scoreboard objectives add
+
+  at = execute at
+  if = execute if
+end
+
+func init
+  $sorem State
+  $sorem Oxy
+  $sorem OxyMax
+  
+  $soadd State dummy {"text":"State","color":"gray","italic":true}
+  $soadd Oxy dummy {"text":"$txt_oxy","color":"$clr_oxy"}
+
+  $spset Balance State 5000
+  $spset Confirm State 0
+  $spset @a Oxy 100
+  $spset @a OxyMax 100
+end
+
+const
+  players_earth = @a[nbt={Dimension:"minecraft:overworld"}]
+  players_moon  = @a[nbt={Dimension:"gcv:moon"}]
+end
+
+func tick
+  $at $players_earth run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:cobblestone"}}] {Item:{tag:{GCV:{Rarity:$ord_common,Value:1,Planet:0},display:{$lore_common}}}}
+  $at $players_earth run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:tuff"}}] {Item:{tag:{GCV:{Rarity:$ord_common,Value:1,Planet:0},display:{$lore_common}}}}
+  $at $players_moon run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:cobblestone"}}] {Item:{tag:{GCV:{Rarity:$ord_uncommon,Value:12,Planet:1},display:{Name:'{"text":"Moon Rock","italic":false}',$lore_uncommon}}}}
+  $at $players_moon run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:tuff"}}] {Item:{tag:{GCV:{Rarity:$ord_uncommon,Value:12,Planet:1},display:{Name:'{"text":"Moon Crust","italic":false}',$lore_uncommon}}}}
+end
