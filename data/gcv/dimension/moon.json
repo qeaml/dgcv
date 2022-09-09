@@ -1,26 +1,36 @@
 {
-  "type": "gcv:planet",
+  "type": "minecraft:overworld",
   "generator": {
-    "type": "minecraft:flat",
-    "settings": {
-      "layers": [
+    "type": "minecraft:noise",
+    "settings": "gcv:moon_ns",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
         {
-          "block": "minecraft:bedrock",
-          "height": 1
+          "biome": "gcv:lunar_mainlands",
+          "parameters": {
+            "temperature": -0.1,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
         },
         {
-          "block": "minecraft:stone",
-          "height": 255
+          "biome": "gcv:lunar_mares",
+          "parameters": {
+            "temperature": 0.05,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
         }
-      ],
-      "structure_overrides": [],
-      "biome": "gcv:moon",
-      "features": false,
-      "lakes": false
-    },
-    "biome_source": {
-      "type": "minecraft:fixed",
-      "biome": "gcv:moon"
+      ]
     }
   }
 }
