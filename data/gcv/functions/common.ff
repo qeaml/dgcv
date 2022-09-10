@@ -29,4 +29,8 @@ const
   nbt_rare = GCV:{Rarity:$ord_rare}
   nbt_exceptional = GCV:{Rarity:$ord_exceptional}
   nbt_legendary = GCV:{Rarity:$ord_legendary}
+
+  txt_warn = {"text":"Warning ","color":"#800000","bold":true}
+
+  log = tellraw @a[tag=Log]
 end
