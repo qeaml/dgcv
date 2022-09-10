@@ -18,13 +18,13 @@ end
 
 func init
   $sorem State
+  $sorem Confirm
   
   $soadd State dummy {"text":"State","color":"gray","italic":true}
-
-  $sodis sidebar State
+  $soadd Confirm dummy {"text":"Confirm","color":"gray","italic":true}
 
   $spset Balance State 5000
-  $spset Confirm State 0
+  $spset @a Confirm 0
 
   function gcv:oxy/init
 
@@ -41,7 +41,7 @@ end
 
 const
   players_earth = @a[$gamers,nbt={Dimension:"minecraft:overworld"}]
-  players_space = @a[$gamers,nbt=!{Dimensions:"minecraft:overworld"}]
+  players_space = @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}]
   players_moon  = @a[$gamers,nbt={Dimension:"gcv:moon"}]
 end
 
