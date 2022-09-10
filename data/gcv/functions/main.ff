@@ -28,9 +28,8 @@ func init
 
   function gcv:oxy/init
 
+  gamemode adventure @a[gamemode=!spectator]
   function gcv:main/gather_gamers
-
-  gamemode adventure @a[$gamers]
   execute in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
   clear @a[$gamers]
   function gcv:kits/starter
