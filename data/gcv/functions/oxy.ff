@@ -29,9 +29,7 @@ func init
 end
 
 func tick
-  tag @a remove gamer
-  tag @a[gamemode=survival] add gamer
-  tag @a[gamemode=adventure] add gamer
+  function gcv:main/gather_gamers
   $at $players_earth if score @p Oxy < @p OxyMax run $spadd @p Oxy 1
   $at $players_earth if score @p OxyTick < @p OxyTickMax run $spadd @p OxyTick 1
   $at @a[$gamers] if score @p Oxy > @p OxyMax run $sprem @p Oxy 1
