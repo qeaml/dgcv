@@ -2,34 +2,6 @@ const
   txt_oxy = O₂
   clr_oxy = #00ffff
 
-  ord_common = 0
-  ord_uncommon = 1
-  ord_scarce = 2
-  ord_rare = 3
-  ord_exceptional = 4
-  ord_legendary = 5
-
-  clr_common = #ffffff
-  clr_uncommon = #80ff80
-  clr_scarce = #8080ff
-  clr_rare = #ff80f0
-  clr_exceptional = #ff8080
-  clr_legendary = #ffff80
-
-  lore_common = Lore:['{"text":"Common","color":"$clr_common"}']
-  lore_uncommon = Lore:['{"text":"Uncommon","color":"$clr_uncommon"}']
-  lore_scarce = Lore:['{"text":"Scarce","color":"$clr_scarce"}']
-  lore_rare = Lore:['{"text":"Rare","color":"$clr_rare"}']
-  lore_exceptional = Lore:['{"text":"Exceptional","color":"$clr_exceptional"}']
-  lore_legendary = Lore:['{"text":"Legendary","color":"$clr_legendary"}']
-
-  nbt_common = GCV:{Rarity:$ord_common}
-  nbt_uncommon = GCV:{Rarity:$ord_uncommon}
-  nbt_scarce = GCV:{Rarity:$ord_scarce}
-  nbt_rare = GCV:{Rarity:$ord_rare}
-  nbt_exceptional = GCV:{Rarity:$ord_exceptional}
-  nbt_legendary = GCV:{Rarity:$ord_legendary}
-
   txt_warn = {"text":"Warning ","color":"#800000","bold":true}
 
   log = tellraw @a[tag=Log]

@@ -3,12 +3,12 @@ const
 end
 
 func starter
-  $grant stone_sword{$nbt_common,display:{Name:'{"text":"Starter Sword","italic":false}',$lore_common}}
-  $grant stone_pickaxe{$nbt_common,display:{Name:'{"text":"Starter Pickaxe1","italic":false}',$lore_common}}
+  $grant stone_sword{display:{Name:'{"text":"Starter Sword","italic":false}'}}
+  $grant stone_pickaxe{display:{Name:'{"text":"Starter Pickaxe","italic":false}'}}
 end
 
 func weapons
-  $grant bow{$nbt_common,display:{Name:'{"text":"Basic Bow","italic":false}',$lore_common}}
-  $grant arrow{$nbt_common,display:{$lore_common}} 32
-  $grant stone_axe{$nbt_common,display:{Name:'{"text":"Basic Battleaxe","italic":false}'}}
+  $grant bow{display:{Name:'{"text":"Basic Bow","italic":false}'}}
+  $grant arrow 32
+  $grant stone_axe{display:{Name:'{"text":"Basic Battleaxe","italic":false}'}}
 end

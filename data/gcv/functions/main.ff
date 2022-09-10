@@ -36,8 +36,4 @@ const
 end
 
 func tick
-  $at $players_earth run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:cobblestone"}}] {Item:{tag:{GCV:{Rarity:$ord_common,Value:1,Planet:0},display:{$lore_common}}}}
-  $at $players_earth run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:tuff"}}] {Item:{tag:{GCV:{Rarity:$ord_common,Value:1,Planet:0},display:{$lore_common}}}}
-  $at $players_moon run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:cobblestone"}}] {Item:{tag:{GCV:{Rarity:$ord_uncommon,Value:12,Planet:1},display:{Name:'{"text":"Moon Rock","italic":false}',$lore_uncommon}}}}
-  $at $players_moon run data merge entity @e[type=item,distance=..5,limit=1,nbt=!{Item:{tag:{GCV:{}}}},nbt={Item:{id:"minecraft:tuff"}}] {Item:{tag:{GCV:{Rarity:$ord_uncommon,Value:12,Planet:1},display:{Name:'{"text":"Moon Crust","italic":false}',$lore_uncommon}}}}
 end
