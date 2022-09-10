@@ -12,6 +12,8 @@ const
 
   at = execute at
   if = execute if
+
+  gamers = tag=gamer
 end
 
 func init
@@ -26,16 +28,16 @@ func init
 
   function gcv:oxy/init
 
-  clear @a[gamemode=!spectator]
+  clear @a[$gamers]
   function gcv:kits/starter
 
   $log "main: Ready"
 end
 
 const
-  players_earth = @a[nbt={Dimension:"minecraft:overworld"}]
-  players_space = @a[nby=!{Dimensions:"minecraft:overworld"}]
-  players_moon  = @a[nbt={Dimension:"gcv:moon"}]
+  players_earth = @a[$gamers,nbt={Dimension:"minecraft:overworld"}]
+  players_space = @a[$gamers,nbt=!{Dimensions:"minecraft:overworld"}]
+  players_moon  = @a[$gamers,nbt={Dimension:"gcv:moon"}]
 end
 
 func tick
