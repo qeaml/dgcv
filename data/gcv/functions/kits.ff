@@ -5,6 +5,7 @@ end
 func starter
   $grant stone_sword{display:{Name:'{"text":"Starter Sword","italic":false}'}}
   $grant stone_pickaxe{display:{Name:'{"text":"Starter Pickaxe","italic":false}'}}
+  $grant golden_carrot 16
 end
 
 func weapons

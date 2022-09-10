@@ -30,6 +30,7 @@ func init
 
   clear @a[$gamers]
   function gcv:kits/starter
+  effect give @a[$gamers] saturation 30 9
 
   $log "main: Ready"
 end
@@ -41,4 +42,13 @@ const
 end
 
 func tick
+  function gcv:main/gather_gamers
+  $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
+  $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
+end
+
+func gather_gamers
+  tag @a remove gamer
+  tag @a[gamemode=survival] add gamer
+  tag @a[gamemode=adventure] add gamer
 end

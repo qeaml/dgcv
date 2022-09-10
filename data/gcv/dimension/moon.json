@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:overworld",
+  "type": "gcv:planet",
   "generator": {
     "type": "minecraft:noise",
     "settings": "gcv:moon_ns",
