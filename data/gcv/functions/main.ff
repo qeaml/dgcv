@@ -26,6 +26,9 @@ func init
 
   function gcv:oxy/init
 
+  clear @a[gamemode=!spectator]
+  function gcv:kits/starter
+
   $log "main: Ready"
 end
 
