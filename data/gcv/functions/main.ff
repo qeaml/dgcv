@@ -14,6 +14,7 @@ const
   at = execute at
   if = execute if
   in = execute in
+  unless = execute unless
   store = execute store
 
   gamers = tag=gamer
@@ -22,25 +23,32 @@ end
 func init
   $sorem State
   $sorem Balance
+  $sorem Deaths
 
   $soadd State dummy {"text":"State","color":"gray","italic":true}
   $soadd Balance dummy {"text":"$$","color":"green"}
+  $soadd Deaths deathCount {"text":"Deaths","color":"red","italic":true}
+  $soadd HasDied deathCount {"text":"Has died?","color":"red","italic":true}
 
   $sodis sidebar State
   $sodis list Balance
 
   $spset Mission State 1
+  $spset OnMission State 0
   $spset BaseReward State 100
   $spset RewardMul State 100
   $spset Earned State 500
   $spset @a Balance 500
+  $spset @a Deaths 0
+  $spset @a HasDied 0
 
   function gcv:oxy/init
 
   gamemode adventure @a[gamemode=!spectator]
   function gcv:main/gather_gamers
 
-  execute in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
+  $in minecraft:overworld run spawnpoint @a 0 100 0 0
+  $in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
   clear @a[$gamers]
   function gcv:kits/starter
   effect give @a[$gamers] saturation 30 9

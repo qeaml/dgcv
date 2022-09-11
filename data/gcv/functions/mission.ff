@@ -1,4 +1,8 @@
 func start
+  $log "mission: Starting"
+
+  $spset OnMission State 1
+
   $spset Earned State 500
   $spopr BaseReward State = Mission State
   $spadd BaseReward State 1
@@ -7,16 +11,34 @@ func start
   function gcv:main/gather_gamers
   item replace entity @a[$gamers] armor.head with glass
   gamemode survival @a[$gamers]
-  $if score Mission State matches 1 in gcv:moon run tp @a[$gamers] 0 100 0 0 89
+  $if score Mission State matches 1 in gcv:moon run tp @a 0 100 0 0 89
+  $if score Mission State matches 1 in gcv:moon run spawnpoint @a 0 100 0 0
+
+  function gcv:mission/tick
+end
+
+func tick
+  $log "mission: Tick"
+  gamemode spectator @a[$gamers,scores={Deaths=1..}]
+  $spset @a[$gamers] Deaths 0
+  $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
+  $unless entity @a[scores={HasDied=0}] run function gcv:mission/end
 end
 
 func end
+  $log "mission: Ending"
+
+  schedule clear gcv:mission/tick
+
+  $spset OnMission State 0
+  $spset @a HasDied 0
+
   $spopr Earned State += BaseReward State
   $spopr @a Balance += Earned State
 
-  function gcv:main/gather_gamers
-  effect give @a[$gamers] saturation 30 9
-  item replace entity @a[$gamers] armor.head with air
-  gamemode adventure @a[$gamers]
-  $in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
+  gamemode adventure @a
+  effect give @a saturation 30 9
+  item replace entity @a armor.head with air
+  $in minecraft:overworld run tp @a 0 100 0 0 0
+  $in minecraft:overworld run spawnpoint @a 0 100 0 0
 end
