@@ -5,6 +5,7 @@ const
   spset = scoreboard players set
   spadd = scoreboard players add
   sprem = scoreboard players remove
+  spopr = scoreboard players operation
 
   sorem = scoreboard objectives remove
   soadd = scoreboard objectives add
@@ -12,19 +13,27 @@ const
 
   at = execute at
   if = execute if
+  in = execute in
+  store = execute store
 
   gamers = tag=gamer
 end
 
 func init
   $sorem State
-  $sorem Confirm
-  
-  $soadd State dummy {"text":"State","color":"gray","italic":true}
-  $soadd Confirm dummy {"text":"Confirm","color":"gray","italic":true}
+  $sorem Balance
 
-  $spset Balance State 5000
-  $spset @a Confirm 0
+  $soadd State dummy {"text":"State","color":"gray","italic":true}
+  $soadd Balance dummy {"text":"$$","color":"green"}
+
+  $sodis sidebar State
+  $sodis list Balance
+
+  $spset Mission State 1
+  $spset BaseReward State 100
+  $spset RewardMul State 100
+  $spset Earned State 500
+  $spset @a Balance 500
 
   function gcv:oxy/init
 

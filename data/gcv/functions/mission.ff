@@ -1,0 +1,22 @@
+func start
+  $spset Earned State 500
+  $spopr BaseReward State = Mission State
+  $spadd BaseReward State 1
+  $spopr BaseReward State *= RewardMul State
+
+  function gcv:main/gather_gamers
+  item replace entity @a[$gamers] armor.head with glass
+  gamemode survival @a[$gamers]
+  $if score Mission State matches 1 in gcv:moon run tp @a[$gamers] 0 100 0 0 89
+end
+
+func end
+  $spopr Earned State += BaseReward State
+  $spopr @a Balance += Earned State
+
+  function gcv:main/gather_gamers
+  effect give @a[$gamers] saturation 30 9
+  item replace entity @a[$gamers] armor.head with air
+  gamemode adventure @a[$gamers]
+  $in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
+end
