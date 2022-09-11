@@ -44,14 +44,12 @@ func init
 
   function gcv:oxy/init
 
-  gamemode adventure @a[gamemode=!spectator]
-  function gcv:main/gather_gamers
-
+  gamemode adventure @a
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
-  $in minecraft:overworld run tp @a[$gamers] 0 100 0 0 0
-  clear @a[$gamers]
+  $in minecraft:overworld run tp @a 0 100 0 0 0
+  clear @a
   function gcv:kits/starter
-  effect give @a[$gamers] saturation 30 9
+  effect give @a saturation 30 9
 
   $log "main: Ready"
 end
