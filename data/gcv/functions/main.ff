@@ -51,6 +51,8 @@ func init
   function gcv:kits/starter
   effect give @a saturation 30 9
 
+  title @a times 30 60 30
+
   $log "main: Ready"
 end
 

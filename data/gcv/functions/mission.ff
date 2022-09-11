@@ -13,6 +13,7 @@ func start
   gamemode survival @a[$gamers]
   $if score Mission State matches 1 in gcv:moon run tp @a 0 100 0 0 89
   $if score Mission State matches 1 in gcv:moon run spawnpoint @a 0 100 0 0
+  $if score Mission State matches 1 in gcv:moon run schedule function gcv:mission/announce_moon 60t
 
   function gcv:mission/tick
 end
@@ -41,4 +42,9 @@ func end
   item replace entity @a armor.head with air
   $in minecraft:overworld run tp @a 0 100 0 0 0
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
+end
+
+func announce_moon
+  title @a subtitle {"text":"~0.0026AU away","color":"gold"}
+  title @a title {"text":"The Moon","color":"green"}
 end
