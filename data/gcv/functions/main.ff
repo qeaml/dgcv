@@ -33,7 +33,7 @@ func init
   $sodis sidebar State
   $sodis list Balance
 
-  $spset Mission State 1
+  $spset Mission State 0
   $spset OnMission State 0
   $spset BaseReward State 100
   $spset RewardMul State 100
@@ -43,6 +43,7 @@ func init
   $spset @a HasDied 0
 
   function gcv:oxy/init
+  function gcv:mission/update_title
 
   gamemode adventure @a
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
