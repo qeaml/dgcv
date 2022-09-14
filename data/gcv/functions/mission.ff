@@ -1,4 +1,8 @@
 func start
+  $unless score Mission State matches $mission_earth run function gcv:mission/process_start
+end
+
+func process_start
   $log "mission: Starting"
 
   $spset OnMission State 1
@@ -11,9 +15,9 @@ func start
   function gcv:main/gather_gamers
   item replace entity @a[$gamers] armor.head with glass
   gamemode survival @a[$gamers]
-  $if score Mission State matches 1 in gcv:moon run tp @a 0 100 0 0 89
-  $if score Mission State matches 1 in gcv:moon run spawnpoint @a 0 100 0 0
-  $if score Mission State matches 1 in gcv:moon run schedule function gcv:mission/announce_moon 60t
+  $if score Mission State matches $mission_moon in gcv:moon run tp @a 0 100 0 0 89
+  $if score Mission State matches $mission_moon in gcv:moon run spawnpoint @a 0 100 0 0
+  $if score Mission State matches $mission_moon in gcv:moon run schedule function gcv:mission/announce_moon 60t
 
   function gcv:mission/tick
 end
