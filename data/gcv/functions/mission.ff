@@ -22,14 +22,14 @@ func process_start
   $spadd BaseReward State 1
   $spopr BaseReward State *= RewardMul State
 
-  function gcv:main/gather_gamers
+  call main/gather_gamers
   item replace entity @a[$gamers] armor.head with glass
   gamemode survival @a[$gamers]
   $if score Mission State matches $mission_moon in gcv:moon run tp @a 0 100 0 0 89
   $if score Mission State matches $mission_moon in gcv:moon run spawnpoint @a 0 100 0 0
   $if score Mission State matches $mission_moon in gcv:moon run schedule function gcv:mission/announce_moon 60t
 
-  function gcv:mission/tick
+  call tick
 end
 
 func tick
@@ -80,13 +80,13 @@ end
 func next
   $spadd Mission State 1
   $if score Mission State matches $mission_max run $spset Mission State 0
-  function gcv:mission/update_title
+  call update_title
 end
 
 func prev
   $sprem Mission State 1
   $if score Mission State matches -1 run $spset Mission State $mission_last
-  function gcv:mission/update_title
+  call update_title
 end
 
 func update_title

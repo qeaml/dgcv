@@ -81,7 +81,7 @@ def process(source: str) -> (dict, dict):
     else:
       match pln.split(" "):
         case ["func", funcname]:
-          parsed_func, err = parse_func(li)
+          parsed_func, err = parse_func(li, source.removesuffix(".ff"))
           if err != "":
             print(f"Line {no+1}: Function definition: {err}")
             print(f"  {ln}")
@@ -119,7 +119,7 @@ def parse_const(li) -> (dict, str):
         case _:
           return ({}, "Invalid syntax")
 
-def parse_func(li) -> (str, str):
+def parse_func(li, ns) -> (str, str):
   lines = []
   while True:
     try:
@@ -130,6 +130,11 @@ def parse_func(li) -> (str, str):
       match ln.split(" "):
         case ["end"]:
           return ("\n".join(lines)+"\n", "")
+        case ["call", fn]:
+          f = fn.split("/")[0] if "/" in fn else ns
+          n = fn.split("/")[1] if "/" in fn else fn
+          r = pathlib.Path(".").absolute().parent.name
+          lines += [f"function {r}:{f}/{n}"]
         case _:
           lines += [ln]
 

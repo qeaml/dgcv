@@ -47,15 +47,16 @@ func init
   $spset Three Consts 3
   $spset Two Consts 2
 
-  function gcv:oxy/init
-  function gcv:rocket/init
-  function gcv:mission/update_title
+  call oxy/init
+  call rocket/init
+  call mission/update_title
 
   gamemode adventure @a
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
   $in minecraft:overworld run tp @a 0 100 0 0 0
   clear @a
-  function gcv:kits/starter
+  # function gcv:kits/starter
+  call kits/starter
   effect give @a saturation 30 9
 
   title @a times 30 60 30
@@ -72,7 +73,7 @@ const
 end
 
 func tick
-  function gcv:main/gather_gamers
+  call gather_gamers
   $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
   $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
 end
