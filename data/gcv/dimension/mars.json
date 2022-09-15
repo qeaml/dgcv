@@ -1,0 +1,36 @@
+{
+  "type": "gcv:planet",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "gcv:mars_ns",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "gcv:martian_mainlands",
+          "parameters": {
+            "temperature": -0.1,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "gcv:martian_icecaps",
+          "parameters": {
+            "temperature": 0.05,
+            "humidity": 0,
+            "continentalness": 0,
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        }
+      ]
+    }
+  }
+}
