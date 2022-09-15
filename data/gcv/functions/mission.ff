@@ -3,6 +3,8 @@ func start
   $if score FuelUsage Rocket > Fuel Rocket run title @p actionbar {"text":"Not enough fuel.","color":"red"}
   $if score Mission State matches $mission_earth run $spset Check State 0
   $if score Mission State matches $mission_earth run title @p actionbar {"text":"Earth is selected.","color":"red"}
+  $if score Mission State matches $mission_mars run $spset Check State 0
+  $if score Mission State matches $mission_mars run title @p actionbar {"text":"Mars is not yet available.","color":"red"}
   $if score OnMission State matches 1 run $spset Check State 0
   $if score OnMission State matches 1 run title @p actionbar {"text":"A mission is already in progress.","color":"red"}
   $if score Check State matches 1.. run function gcv:mission/process_start
@@ -28,6 +30,9 @@ func process_start
   $if score Mission State matches $mission_moon in gcv:moon run tp @a 0 100 0 0 89
   $if score Mission State matches $mission_moon in gcv:moon run spawnpoint @a 0 100 0 0
   $if score Mission State matches $mission_moon in gcv:moon run schedule function gcv:mission/announce_moon 60t
+  $if score Mission State matches $mission_mars in gcv:mars run tp @a 0 100 0 0 89
+  $if score Mission State matches $mission_mars in gcv:mars run spawnpoint @a 0 100 0 0
+  $if score Mission State matches $mission_mars in gcv:mars run schedule function gcv:mission/announce_mars 60t
 
   call tick
 end
@@ -64,17 +69,24 @@ func announce_moon
   title @a title {"text":"The Moon","color":"green"}
 end
 
+func announce_mars
+  title @a subtitle {"text":"~0.3646AU away","color":"gold"}
+  title @a title {"text":"Mars","color":"green"}
+end
+
 const
   MissionTitle    = @e[tag=MissionTitle,limit=1]
   MissionDistance = @e[tag=MissionDistance,limit=1]
 
   mission_earth = 0
   mission_moon  = 1
-  mission_last  = $mission_moon
-  mission_max   = 2
+  mission_mars  = 2
+  mission_last  = $mission_mars
+  mission_max   = 3
 
   head_earth = {SkullOwner:{Id:[I;-475097093,-1232581123,-1897520009,-1863176499],Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI4OWQ1YjE3ODYyNmVhMjNkMGIwYzNkMmRmNWMwODVlODM3NTA1NmJmNjg1YjVlZDViYjQ3N2ZlODQ3MmQ5NCJ9fX0="}]}}}
   head_moon  = {SkullOwner:{Id:[I;863215294,-1780921430,-1773460256,1982824210],Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzAwYTFhN2JiMDdmZGI0ZTZhODZlMzQxODE2ZTg4NDNkZGFmN2NmMzcxM2EzNjY2ZDc0YjcyZjk4NjE5ZjA2MyJ9fX0="}]}}}
+  head_mars  = {SkullOwner:{Id:[I;-1927913583,-704033596,-1213014585,-386995908],Properties:{textures:[{Value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzc3ZDYxNmJjNDRhYzliMzczMGZlZDQ3ZjI5YTM3OGY4OGExNjcyOGM2NzA0OGMxYTM4N2QyMjllMWNiYSJ9fX0="}]}}}
 end
 
 func next
@@ -96,4 +108,7 @@ func update_title
   $if score Mission State matches $mission_moon run data modify entity $MissionTitle CustomName set value '{"text":"Moon","color":"gray"}'
   $if score Mission State matches $mission_moon run data modify entity $MissionDistance CustomName set value '{"text":"450L fuel required","color":"green"}'
   $if score Mission State matches $mission_moon run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_moon}
+  $if score Mission State matches $mission_mars run data modify entity $MissionTitle CustomName set value '{"text":"Mars","color":"red"}'
+  $if score Mission State matches $mission_mars run data modify entity $MissionDistance CustomName set value '{"text":"1350L fuel required","color":"green"}'
+  $if score Mission State matches $mission_mars run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_mars}
 end

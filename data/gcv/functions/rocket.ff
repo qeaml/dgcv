@@ -23,8 +23,12 @@ func recalculate
   $spopr FuelMax Rocket *= Tank Rocket
 
   $spset FuelUsage Rocket $fuel_usage_mul
-  $spopr FuelUsage Rocket *= Engine Rocket
-  $unless score Mission State matches 0 run $spopr FuelUsage Rocket *= Mission State
+
+  $spopr MissionMul Rocket = Mission State
+  $if score MissionMul Rocket matches 1 run $sprem MissionMul Rocket 1
+  $spopr MissionMul Rocket *= Three Consts
+  $spopr MissionMul Rocket /= Two Consts
+  $unless score MissionMul Rocket matches 0 run $spopr FuelUsage Rocket *= MissionMul Rocket
   $spopr FuelUsage Rocket *= Three Consts
   $spopr FuelUsage Rocket /= Two Consts
 
