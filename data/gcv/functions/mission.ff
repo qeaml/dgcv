@@ -1,11 +1,21 @@
 func start
-  $unless score Mission State matches $mission_earth run function gcv:mission/process_start
+  $unless score FuelUsage Rocket > Fuel Rocket run $spadd Check State 1
+  $if score FuelUsage Rocket > Fuel Rocket run title @p actionbar {"text":"Not enough fuel.","color":"red"}
+  $if score Mission State matches $mission_earth run $spset Check State 0
+  $if score Mission State matches $mission_earth run title @p actionbar {"text":"Earth is selected.","color":"red"}
+  $if score OnMission State matches 1 run $spset Check State 0
+  $if score OnMission State matches 1 run title @p actionbar {"text":"A mission is already in progress.","color":"red"}
+  $if score Check State matches 1.. run function gcv:mission/process_start
+  $unless score Check State matches 1.. run $log "mission: Checks failed"
+  $spset Check State 0
 end
 
 func process_start
   $log "mission: Starting"
 
   $spset OnMission State 1
+
+  $spopr Fuel Rocket -= FuelUsage Rocket
 
   $spset Earned State 500
   $spopr BaseReward State = Mission State
@@ -36,6 +46,8 @@ func end
 
   $spset OnMission State 0
   $spset @a HasDied 0
+
+  $spopr Fuel Rocket -= FuelUsage Rocket
 
   $spopr Earned State += BaseReward State
   $spopr @a Balance += Earned State
@@ -82,6 +94,6 @@ func update_title
   $if score Mission State matches $mission_earth run data modify entity $MissionDistance CustomName set value '{"text":"You are here!","color":"green"}'
   $if score Mission State matches $mission_earth run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_earth}
   $if score Mission State matches $mission_moon run data modify entity $MissionTitle CustomName set value '{"text":"Moon","color":"gray"}'
-  $if score Mission State matches $mission_moon run data modify entity $MissionDistance CustomName set value '{"text":"~0.0026AU away","color":"green"}'
+  $if score Mission State matches $mission_moon run data modify entity $MissionDistance CustomName set value '{"text":"450L fuel required","color":"green"}'
   $if score Mission State matches $mission_moon run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_moon}
 end

@@ -24,13 +24,14 @@ func init
   $sorem State
   $sorem Balance
   $sorem Deaths
+  $sorem Consts
 
   $soadd State dummy {"text":"State","color":"gray","italic":true}
   $soadd Balance dummy {"text":"$$","color":"green"}
   $soadd Deaths deathCount {"text":"Deaths","color":"red","italic":true}
   $soadd HasDied deathCount {"text":"Has died?","color":"red","italic":true}
+  $soadd Consts dummy {"text":"Consts","color":"gray","italic":true}
 
-  $sodis sidebar State
   $sodis list Balance
 
   $spset Mission State 0
@@ -38,11 +39,16 @@ func init
   $spset BaseReward State 100
   $spset RewardMul State 100
   $spset Earned State 500
+  $spset Check State 0
   $spset @a Balance 500
   $spset @a Deaths 0
   $spset @a HasDied 0
 
+  $spset Three Consts 3
+  $spset Two Consts 2
+
   function gcv:oxy/init
+  function gcv:rocket/init
   function gcv:mission/update_title
 
   gamemode adventure @a
@@ -53,6 +59,8 @@ func init
   effect give @a saturation 30 9
 
   title @a times 30 60 30
+
+  $sodis sidebar Rocket
 
   $log "main: Ready"
 end

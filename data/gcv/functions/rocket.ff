@@ -1,0 +1,33 @@
+const
+  fuel_tank_mul = 1000
+  fuel_usage_mul = 300
+end
+
+func init
+  $sorem Rocket
+
+  $soadd Rocket dummy {"text":"Rocket","color":"red"}
+
+  $spset Engine Rocket 1
+  $spset Tank Rocket 1
+
+  function gcv:rocket/recalculate
+
+  $spopr Fuel Rocket = FuelMax Rocket
+
+  $log "rocket: Ready"
+end
+
+func recalculate
+  $spset FuelMax Rocket $fuel_tank_mul
+  $spopr FuelMax Rocket *= Tank Rocket
+
+  $spset FuelUsage Rocket $fuel_usage_mul
+  $spopr FuelUsage Rocket *= Engine Rocket
+  $unless score Mission State matches 0 run $spopr FuelUsage Rocket *= Mission State
+  $spopr FuelUsage Rocket *= Three Consts
+  $spopr FuelUsage Rocket /= Two Consts
+
+  $log "rocket: Recalculated"
+end
+
