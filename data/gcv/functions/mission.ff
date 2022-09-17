@@ -41,32 +41,31 @@ func process_start
   # be /forceloaded
   $moon_mission run tag @e[tag=PersistentSpawn] add Spawnpoint
   $mars_mission run tag @e[tag=PersistentSpawn] add Spawnpoint
-  $log "Persistent spawnpoint:"
-  $log {"selector":"@e[tag=PersistentSpawn]"}
 
-  $moon_mission unless entity @e[tag=Spawnpoint] run summon marker 0 100 0 {Tags:["RandomSpawn"]}
-  $mars_mission unless entity @e[tag=Spawnpoint] run summon marker 0 100 0 {Tags:["RandomSpawn"]}
-  $log "Random spawnpoint:"
-  $log {"selector":"@e[tag=RandomSpawn]"}
+  $moon_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
+  $mars_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
 
-  $unless entity @e[tag=Spawnpoint] run tag @e[tag=RandomSpawn] add Spawnpoint
-  $log "Final spawnpoint:"
-  $log {"selector":"@e[tag=Spawnpoint]"}
-
-  $at @e[tag=Spawnpoint] run tp @a ~ ~ ~ 0 89
   $at @e[tag=Spawnpoint] run spawnpoint @a ~ ~ ~ 0
+  $at @e[tag=Spawnpoint] run tp @a ~ 200 ~ 0 89
+  effect give @a slow_falling 10 0 true
+  tag @a add Falling
 
   tag @e[tag=Spawnpoint] remove Spawnpoint
-  kill @e[tag=RandomSpawn]
+  kill @e[tag=TempSpawn]
 
-  call tick
+  schedule function gcv:mission/tick 5t
 end
 
 func tick
   gamemode spectator @a[$gamers,scores={Deaths=1..}]
   $spset @a[$gamers] Deaths 0
-  $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
   $unless entity @a[scores={HasDied=0}] run function gcv:mission/end
+  effect clear @a[tag=Falling,nbt={OnGround:1b}] slow_falling
+  tag @a[tag=Falling,nbt={OnGround:1b}] remove Falling
+  $at @a[tag=Falling,nbt={OnGround:0b}] run tp @p ~ ~ ~ 0 89
+  effect give @a[tag=Falling] slow_falling 5 0 true
+
+  $if score OnMission State matches 1 run schedule function gcv:mission/tick 2t
 end
 
 func end
