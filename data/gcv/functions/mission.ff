@@ -92,6 +92,8 @@ end
 func end
   $log "mission: Ending"
 
+  call main/gather_gamers
+
   schedule clear gcv:mission/tick
 
   $spset OnMission State 0
@@ -100,7 +102,7 @@ func end
   $spopr Fuel Rocket -= FuelUsage Rocket
 
   $spopr Earned State += BaseReward State
-  $spopr @a Balance += Earned State
+  $spopr @a[$gamers] Balance += Earned State
 
   tellraw @a [{"text":"---- ","color":"dark_gray"},{"text":"Mission summary","color":"yellow","bold":true},{"text":" ----","color":"dark_gray"}]
   tellraw @a [{"text":"Earnings: ","color":"green"},{"score":{"name":"Earned","objective":"State"},"color":"white"},{"text":"$$","color":"dark_green"}]
@@ -108,9 +110,12 @@ func end
   tellraw @a [{"text":"Leftover fuel: ","color":"red"},{"score":{"name":"Fuel","objective":"Rocket"},"color":"yellow"},{"text":"L","color":"yellow"},{"text":"/","color":"gray"},{"score":{"name":"FuelMax","objective":"Rocket"},"color":"white"},{"text":"L","color":"white"}]
   tellraw @a [{"text":"-------------------------","color":"dark_gray","bold":false}]
 
-  gamemode adventure @a
-  effect give @a saturation 30 9
-  item replace entity @a armor.head with air
+  gamemode adventure @a[$gamers]
+  effect give @a[$gamers] saturation 30 9
+  item replace entity @a[$gamers] armor.head with air
+  item replace entity @a[$gamers] armor.chest with air
+  item replace entity @a[$gamers] armor.legs with air
+  item replace entity @a[$gamers] armor.feet with air
   $in minecraft:overworld run tp @a 0 100 0 0 0
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
 end
