@@ -14,6 +14,10 @@ end
 const
   moon_mission = $if score Mission State matches $mission_moon in gcv:moon
   mars_mission = $if score Mission State matches $mission_mars in gcv:mars
+
+  players_earth = @a[$gamers,nbt={Dimension:"minecraft:overworld"}]
+  players_space = @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}]
+  players_moon  = @a[$gamers,nbt={Dimension:"gcv:moon"}]
 end
 
 func process_start
@@ -56,6 +60,8 @@ func process_start
 end
 
 func tick
+  call gather_gamers
+
   gamemode spectator @a[$gamers,scores={Deaths=1..}]
   $spset @a[$gamers] Deaths 0
   $unless entity @a[scores={HasDied=0}] run function gcv:mission/end
@@ -69,11 +75,14 @@ func tick
   $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_chestplate{GCV:{Invalidate:1b}}
   $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_leggings{GCV:{Invalidate:1b}}
   $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_boots{GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass"}]} run item replace entity @p armor.head with glass{display:{Name:'{"text":"Astronaut Helmet","italic":false}'},GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run item replace entity @p armor.chest with iron_chestplate{display:{Name:'{"text":"Astronaut Suit Top","italic":false}'},GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings"}]} run item replace entity @p armor.legs with iron_leggings{display:{Name:'{"text":"Astronaut Suit Bottom","italic":false}'},GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots"}]} run item replace entity @p armor.feet with iron_boots{display:{Name:'{"text":"Astronaut Boots","italic":false}'},GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass"}]} run item replace entity @p armor.head with glass{display:{Name:'{"text":"Astronaut Helmet","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run item replace entity @p armor.chest with iron_chestplate{display:{Name:'{"text":"Astronaut Suit Top","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings"}]} run item replace entity @p armor.legs with iron_leggings{display:{Name:'{"text":"Astronaut Suit Bottom","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots"}]} run item replace entity @p armor.feet with iron_boots{display:{Name:'{"text":"Astronaut Boots","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
   kill @e[type=item,nbt={Item:{tag:{GCV:{Invalidate:1b}}}}]
+
+  $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
+  $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
 
   $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
 end

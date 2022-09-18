@@ -74,18 +74,6 @@ func init
   $log "main: Ready"
 end
 
-const
-  players_earth = @a[$gamers,nbt={Dimension:"minecraft:overworld"}]
-  players_space = @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}]
-  players_moon  = @a[$gamers,nbt={Dimension:"gcv:moon"}]
-end
-
-func tick
-  call gather_gamers
-  $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
-  $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
-end
-
 func gather_gamers
   tag @a remove gamer
   tag @a[gamemode=survival] add gamer
