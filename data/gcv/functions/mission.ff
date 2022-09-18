@@ -100,6 +100,12 @@ func end
   $spopr Earned State += BaseReward State
   $spopr @a Balance += Earned State
 
+  tellraw @a [{"text":"---- ","color":"dark_gray"},{"text":"Mission summary","color":"yellow","bold":true},{"text":" ----","color":"dark_gray"}]
+  tellraw @a [{"text":"Earnings: ","color":"green"},{"score":{"name":"Earned","objective":"State"},"color":"white"},{"text":"$$","color":"dark_green"}]
+  tellraw @a [{"text":"Your balance is now: ","color":"aqua"},{"score":{"name":"*","objective":"Balance"},"color":"white"},{"text":"$$","color":"dark_green"}]
+  tellraw @a [{"text":"Leftover fuel: ","color":"red"},{"score":{"name":"Fuel","objective":"Rocket"},"color":"yellow"},{"text":"L","color":"yellow"},{"text":"/","color":"gray"},{"score":{"name":"FuelMax","objective":"Rocket"},"color":"white"},{"text":"L","color":"white"}]
+  tellraw @a [{"text":"-------------------------","color":"dark_gray","bold":false}]
+
   gamemode adventure @a
   effect give @a saturation 30 9
   item replace entity @a armor.head with air
