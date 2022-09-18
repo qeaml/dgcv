@@ -35,7 +35,6 @@ func tick
   $at @a[$gamers] if score @p Oxy > @p OxyMax run $sprem @p Oxy 1
   $sprem @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=1..}] OxyTick 1
   $sprem @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=0,Oxy=1..}] Oxy 1
-  title @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=0,Oxy=1..}] actionbar {"text":"-1 $txt_oxy","color":"$clr_oxy"}
   $if entity @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=0,Oxy=1..}] run $log [{"text":"oxy: OxyTick = 0 for "},{"selector":"@a[$gamers,nbt=!{Dimension:\"minecraft:overworld\"},scores={OxyTick=0,Oxy=1..}]"}]
   tellraw @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=0,Oxy=1..,Oxy=$oxy_low}] [$txt_warn,{"text":"Oxygen levels are low.","color":"gold","bold":false}]
   tellraw @a[$gamers,nbt=!{Dimension:"minecraft:overworld"},scores={OxyTick=0,Oxy=1..,Oxy=$oxy_critical}] [$txt_warn,{"text":"Oxygen levels are critically low.","color":"gold","bold":false}]

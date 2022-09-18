@@ -84,6 +84,8 @@ func tick
   $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
   $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
 
+  title @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}] actionbar [{"score":{"name":"*","objective":"Oxy"},"color":"$clr_oxy"},{"text":" $txt_oxy"}]
+
   $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
 end
 
