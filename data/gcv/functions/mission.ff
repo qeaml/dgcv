@@ -34,7 +34,7 @@ func process_start
   item replace entity @a[$gamers] armor.head with glass
   gamemode survival @a[$gamers]
 
-  $moon_mission run tp @a 0 100 0
+  $moon_mission run tp @a 0 500 0
 
   # Important Note:
   # In order for persistent spawns to work, the chunk they were placed in *must*
@@ -45,6 +45,7 @@ func process_start
   $moon_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
   $mars_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
 
+  spreadplayers 0 0 16 16 false @e[tag=TempSpawn]
   $at @e[tag=Spawnpoint] run spawnpoint @a ~ ~ ~ 0
   $at @e[tag=Spawnpoint] run tp @a ~ 200 ~ 0 89
   effect give @a slow_falling 10 0 true
