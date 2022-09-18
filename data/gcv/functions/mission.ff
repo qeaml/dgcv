@@ -4,8 +4,6 @@ func start
   $if score FuelUsage Rocket > Fuel Rocket run title @p actionbar {"text":"Not enough fuel.","color":"red"}
   $if score Mission State matches $mission_earth run $spset Check State 0
   $if score Mission State matches $mission_earth run title @p actionbar {"text":"Earth is selected.","color":"red"}
-  $if score Mission State matches $mission_mars run $spset Check State 0
-  $if score Mission State matches $mission_mars run title @p actionbar {"text":"Mars is not yet available.","color":"red"}
   $if score OnMission State matches 1 run $spset Check State 0
   $if score OnMission State matches 1 run title @p actionbar {"text":"A mission is already in progress.","color":"red"}
   $if score Check State matches 1.. run function gcv:mission/process_start
@@ -35,6 +33,7 @@ func process_start
   gamemode survival @a[$gamers]
 
   $moon_mission run tp @a 0 500 0
+  $mars_mission run tp @a 0 500 0
 
   # Important Note:
   # In order for persistent spawns to work, the chunk they were placed in *must*
@@ -42,8 +41,8 @@ func process_start
   $moon_mission run tag @e[tag=PersistentSpawn] add Spawnpoint
   $mars_mission run tag @e[tag=PersistentSpawn] add Spawnpoint
 
-  $moon_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
-  $mars_mission unless entity @e[tag=Spawnpoint] run summon marker 0 200 0 {Tags:["TempSpawn","Spawnpoint"]}
+  $moon_mission unless entity @e[tag=Spawnpoint] run summon marker 0 500 0 {Tags:["TempSpawn","Spawnpoint"]}
+  $mars_mission unless entity @e[tag=Spawnpoint] run summon marker 0 500 0 {Tags:["TempSpawn","Spawnpoint"]}
 
   spreadplayers 0 0 16 16 false @e[tag=TempSpawn]
   $at @e[tag=Spawnpoint] run spawnpoint @a ~ ~ ~ 0
@@ -61,12 +60,13 @@ func tick
   gamemode spectator @a[$gamers,scores={Deaths=1..}]
   $spset @a[$gamers] Deaths 0
   $unless entity @a[scores={HasDied=0}] run function gcv:mission/end
+
   effect clear @a[tag=Falling,nbt={OnGround:1b}] slow_falling
   tag @a[tag=Falling,nbt={OnGround:1b}] remove Falling
   $at @a[tag=Falling,nbt={OnGround:0b}] run tp @p ~ ~ ~ 0 89
   effect give @a[tag=Falling] slow_falling 5 0 true
 
-  $if score OnMission State matches 1 run schedule function gcv:mission/tick 2t
+  $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
 end
 
 func end

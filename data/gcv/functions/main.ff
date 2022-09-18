@@ -59,6 +59,9 @@ func init
   call kits/starter
   effect give @a saturation 30 9
 
+  $in gcv:moon run forceload add 0 0
+  $in gcv:mars run forceload add 0 0
+
   title @a times 30 60 30
 
   $sodis sidebar Rocket
