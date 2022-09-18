@@ -68,7 +68,9 @@ func tick
 
   effect clear @a[tag=Falling,nbt={OnGround:1b}] slow_falling
   tag @a[tag=Falling,nbt={OnGround:1b}] remove Falling
-  $at @a[tag=Falling,nbt={OnGround:0b}] run tp @p ~ ~ ~ 0 89
+  $at @a[tag=Falling] run tp @p ~ ~ ~ 0 89
+  $at @a[tag=Falling] run particle minecraft:smoke ~ ~ ~ 0 -2 0 0.1 25 normal @p
+  $at @a[tag=Falling] run particle minecraft:campfire_cosy_smoke ~ ~2 ~ 0 -10 0 0.01 25 normal @p
   effect give @a[tag=Falling] slow_falling 5 0 true
 
   $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] glass{GCV:{Invalidate:1b}}
