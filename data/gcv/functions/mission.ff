@@ -83,8 +83,8 @@ func tick
   $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots"}]} run item replace entity @p armor.feet with iron_boots{display:{Name:'{"text":"Astronaut Boots","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
   kill @e[type=item,nbt={Item:{tag:{GCV:{Invalidate:1b}}}}]
 
-  $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
-  $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass"}]}] armor.head with glass
+  $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]}] armor.head with glass{GCV:{Invalidate:1b}}
+  $at $players_space run item replace entity @e[type=skeleton,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]}] armor.head with glass{GCV:{Invalidate:1b}}
 
   title @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}] actionbar [{"score":{"name":"*","objective":"Oxy"},"color":"$clr_oxy"},{"text":" $txt_oxy"}]
 
