@@ -53,6 +53,13 @@ func init
   call rocket/init
   call mission/update_title
 
+  $in minecraft:overworld run xp set @a 0 points
+  $in minecraft:overworld run xp set @a 0 levels
+  $in gcv:moon run xp set @a 0 points
+  $in gcv:moon run xp set @a 0 levels
+  $in gcv:mars run xp set @a 0 points
+  $in gcv:mars run xp set @a 0 levels
+
   gamemode adventure @a
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
   $in minecraft:overworld run tp @a 0 100 0 0 0
