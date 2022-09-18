@@ -70,8 +70,10 @@
           "y_scale": 0.5
         },
         "argument2": {
-          "type": "minecraft:interpolated",
-          "argument": "minecraft:overworld_large_biomes/sloped_cheese"
+          "type": "minecraft:noise",
+          "noise": "minecraft:calcite",
+          "xz_scale": 1,
+          "y_scale": 0.25
         }
       }
     },
