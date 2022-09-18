@@ -3,13 +3,13 @@ const
 end
 
 func starter
-  $grant stone_sword{display:{Name:'{"text":"Starter Sword","italic":false}'}}
-  $grant stone_pickaxe{display:{Name:'{"text":"Starter Pickaxe","italic":false}'}}
+  $grant stone_sword{display:{Name:'{"text":"Starter Sword","italic":false}'},Unbreakable:1b}
+  $grant stone_pickaxe{display:{Name:'{"text":"Starter Pickaxe","italic":false}'},Unbreakable:1b}
   $grant golden_carrot 16
 end
 
 func weapons
-  $grant bow{display:{Name:'{"text":"Basic Bow","italic":false}'}}
+  $grant bow{display:{Name:'{"text":"Basic Bow","italic":false}'},Unbreakable:1b}
   $grant arrow 32
-  $grant stone_axe{display:{Name:'{"text":"Basic Battleaxe","italic":false}'}}
+  $grant stone_axe{display:{Name:'{"text":"Basic Battleaxe","italic":false}'},Unbreakable:1b}
 end
