@@ -29,7 +29,6 @@ func init
 end
 
 func tick
-  call main/gather_gamers
   $at $players_earth if score @p Oxy < @p OxyMax run $spadd @p Oxy 1
   $at $players_earth if score @p OxyTick < @p OxyTickMax run $spadd @p OxyTick 1
   $at @a[$gamers] if score @p Oxy > @p OxyMax run $sprem @p Oxy 1

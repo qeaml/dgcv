@@ -78,4 +78,5 @@ func gather_gamers
   tag @a remove gamer
   tag @a[gamemode=survival] add gamer
   tag @a[gamemode=adventure] add gamer
+  $log [{"text":"main: Gathered gamers: "},{"selector":"@a[$gamers]"}]
 end
