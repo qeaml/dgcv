@@ -29,7 +29,6 @@ func process_start
   $spopr BaseReward State *= RewardMul State
 
   call main/gather_gamers
-  item replace entity @a[$gamers] armor.head with glass
   gamemode survival @a[$gamers]
 
   $moon_mission run tp @a 0 500 0
@@ -65,6 +64,16 @@ func tick
   tag @a[tag=Falling,nbt={OnGround:1b}] remove Falling
   $at @a[tag=Falling,nbt={OnGround:0b}] run tp @p ~ ~ ~ 0 89
   effect give @a[tag=Falling] slow_falling 5 0 true
+
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] glass{GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_chestplate{GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_leggings{GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_boots{GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass"}]} run item replace entity @p armor.head with glass{display:{Name:'{"text":"Astronaut Helmet","italic":false}'},GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run item replace entity @p armor.chest with iron_chestplate{display:{Name:'{"text":"Astronaut Suit Top","italic":false}'},GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings"}]} run item replace entity @p armor.legs with iron_leggings{display:{Name:'{"text":"Astronaut Suit Bottom","italic":false}'},GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots"}]} run item replace entity @p armor.feet with iron_boots{display:{Name:'{"text":"Astronaut Boots","italic":false}'},GCV:{Invalidate:1b}}
+  kill @e[type=item,nbt={Item:{tag:{GCV:{Invalidate:1b}}}}]
 
   $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
 end

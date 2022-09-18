@@ -21,6 +21,8 @@ const
 end
 
 func init
+  schedule clear gcv:mission/tick
+
   $sorem State
   $sorem Balance
   $sorem Deaths
@@ -54,8 +56,11 @@ func init
   gamemode adventure @a
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
   $in minecraft:overworld run tp @a 0 100 0 0 0
+  item replace entity @a armor.head with air
+  item replace entity @a armor.chest with air
+  item replace entity @a armor.legs with air
+  item replace entity @a armor.feet with air
   clear @a
-  # function gcv:kits/starter
   call kits/starter
   effect give @a saturation 30 9
 
