@@ -73,70 +73,55 @@ def process(source: str) -> (dict, dict):
   li = iter(lines)
   funcs = dict()
   consts = dict()
-  while True:
-    try:
-      no, pln, ln = next(li)
-    except StopIteration:
-      break
-    else:
-      match pln.split(" "):
-        case ["func", funcname]:
-          parsed_func, err = parse_func(li, source.removesuffix(".ff"))
-          if err != "":
-            print(f"Line {no+1}: Function definition: {err}")
-            print(f"  {ln}")
-            break
-          funcs[funcname] = parsed_func
-        case ["const"]:
-          parsed_consts, err = parse_const(li)
-          if err != "":
-            print(f"Line {no+1}: Constant definition: {err}")
-            print(f"  {ln}")
-            break
-          consts |= parsed_consts
-        case [], [""]:
-          continue
-        case _:
-          print(f"Line {no+1}: Invalid syntax")
+  for no, pln, ln in li:
+    match pln.split(" "):
+      case ["func", funcname]:
+        parsed_func, err = parse_func(li, source.removesuffix(".ff"))
+        if err != "":
+          print(f"Line {no+1}: Function definition: {err}")
           print(f"  {ln}")
+          break
+        funcs[funcname] = parsed_func
+      case ["const"]:
+        parsed_consts, err = parse_const(li)
+        if err != "":
+          print(f"Line {no+1}: Constant definition: {err}")
+          print(f"  {ln}")
+          break
+        consts |= parsed_consts
+      case [], [""]:
+        continue
+      case _:
+        print(f"Line {no+1}: Invalid syntax")
+        print(f"  {ln}")
   return (funcs, consts)
 
 def parse_const(li) -> (dict, str):
   out = dict()
-  while True:
-    try:
-      _, ln, _ = next(li)
-    except StopIteration:
-      return ({}, "Unexpected end of input")
-    else:
-      match ln.split(" "):
-        case [constname, "=", *constvalue]:
-          out[constname] = " ".join(constvalue)
-        case ["end"]:
-          return (out, "")
-        case []:
-          continue
-        case _:
-          return ({}, "Invalid syntax")
+  for _, ln, _ in li:
+    match ln.split(" "):
+      case [constname, "=", *constvalue]:
+        out[constname] = " ".join(constvalue)
+      case ["end"]:
+        return (out, "")
+      case []:
+        continue
+      case _:
+        return ({}, "Invalid syntax")
 
 def parse_func(li, ns) -> (str, str):
   lines = []
-  while True:
-    try:
-      _, ln, _ = next(li)
-    except StopIteration:
-      return ({}, "Unexpected end of input")
-    else:
-      match ln.split(" "):
-        case ["end"]:
-          return ("\n".join(lines)+"\n", "")
-        case ["call", fn]:
-          f = fn.split("/")[0] if "/" in fn else ns
-          n = fn.split("/")[1] if "/" in fn else fn
-          r = pathlib.Path(".").absolute().parent.name
-          lines += [f"function {r}:{f}/{n}"]
-        case _:
-          lines += [ln]
+  for _, ln, _ in li:
+    match ln.split(" "):
+      case ["end"]:
+        return ("\n".join(lines)+"\n", "")
+      case ["call", fn]:
+        f = fn.split("/")[0] if "/" in fn else ns
+        n = fn.split("/")[1] if "/" in fn else fn
+        r = pathlib.Path(".").absolute().parent.name
+        lines += [f"function {r}:{f}/{n}"]
+      case _:
+        lines += [ln]
 
 if __name__ == "__main__":
   from sys import argv
