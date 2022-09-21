@@ -3,6 +3,8 @@ import string
 import os
 import getopt
 
+SUBSTITUTE_CHARS = string.ascii_letters+"_.-$"
+
 def main(args: list[str]) -> int:
   print("ff v1.0")
   print()
@@ -31,7 +33,7 @@ def main(args: list[str]) -> int:
       consts |= c
     for name, val in consts.copy().items():
       try:
-        newval = string.Template(val).substitute(consts)
+        newval = substitute(val, consts)
       except KeyError as k:
         print(f"Error expanding constant {k.args[0]} in constant {name}.")
         return 1
@@ -39,7 +41,7 @@ def main(args: list[str]) -> int:
         consts[name] = newval
     for name, code in funcs.copy().items():
       try:
-        newcode = string.Template(code).substitute(consts)
+        newcode = substitute(code, consts)
       except KeyError as k:
         print(f"Error expanding constant {k.args[0]} in function {name}.")
         return 1
@@ -55,6 +57,26 @@ def main(args: list[str]) -> int:
           f.write(newcode)
 
   return 0
+
+def substitute(src: str, consts: dict) -> (str, str):
+  out = ""
+  si = iter(src)
+  for ch in si:
+    match ch:
+      case "$":
+        name = ""
+        for ch in si:
+          if ch not in SUBSTITUTE_CHARS:
+            break
+          else:
+            name += ch
+        if name == "$":
+          out += "$"
+        else:
+          out += consts[name]
+      case _:
+        out += ch
+  return out
 
 def process(source: str) -> (dict, dict):
   print(source)
@@ -72,6 +94,7 @@ def process(source: str) -> (dict, dict):
       lines += [(no, pln, ln)]
   li = iter(lines)
   funcs = dict()
+  tmpls = dict()
   consts = dict()
   for no, pln, ln in li:
     match pln.split(" "):
