@@ -56,7 +56,14 @@ func process_start
   tag @e[tag=Spawnpoint] remove Spawnpoint
   kill @e[tag=TempSpawn]
 
+  schedule function gcv:mission/announce 20t
+
   schedule function gcv:mission/tick 5t
+end
+
+tmpl ensure_gamer_item slot_no slot_name id name
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:$slot_no,id:"minecraft:$id",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] $id{GCV:{Invalidate:1b}}
+  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:$slot_no,id:"minecraft:$id",tag:{GCV:{Invalidate:1b}}}]} run item replace entity @p $slot_name with $id{display:{Name:'{"text":"$name","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
 end
 
 func tick
@@ -73,14 +80,10 @@ func tick
   $at @a[tag=Falling] run particle minecraft:campfire_cosy_smoke ~ ~2 ~ 0 -10 0 0.01 25 normal @p
   effect give @a[tag=Falling] slow_falling 5 0 true
 
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] glass{GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_chestplate{GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_leggings{GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots",tag:{GCV:{Invalidate:1b}}}]} run clear @a[$gamers] iron_boots{GCV:{Invalidate:1b}}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:103b,id:"minecraft:glass"}]} run item replace entity @p armor.head with glass{display:{Name:'{"text":"Astronaut Helmet","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:102b,id:"minecraft:iron_chestplate",tag:{GCV:{Invalidate:1b}}}]} run item replace entity @p armor.chest with iron_chestplate{display:{Name:'{"text":"Astronaut Suit Top","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:101b,id:"minecraft:iron_leggings"}]} run item replace entity @p armor.legs with iron_leggings{display:{Name:'{"text":"Astronaut Suit Bottom","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
-  $at @a[$gamers] unless data entity @p {Inventory:[{Slot:100b,id:"minecraft:iron_boots"}]} run item replace entity @p armor.feet with iron_boots{display:{Name:'{"text":"Astronaut Boots","italic":false}'},GCV:{Invalidate:1b},Unbreakable:1b}
+  \ensure_gamer_item(103b, armor.head, glass, Astronaut Helmet)
+  \ensure_gamer_item(102b, armor.chest, iron_chestplate, Astronaut Suit Top)
+  \ensure_gamer_item(101b, armor.legs, iron_leggings, Astronaut Suit Bottom)
+  \ensure_gamer_item(100b, armor.feet, iron_boots, Astronaut Boots)
   kill @e[type=item,nbt={Item:{tag:{GCV:{Invalidate:1b}}}}]
 
   $at $players_space run item replace entity @e[type=zombie,distance=..64,limit=1,nbt=!{ArmorItems:[{},{},{},{id:"minecraft:glass",tag:{GCV:{Invalidate:1b}}}]}] armor.head with glass{GCV:{Invalidate:1b}}
@@ -122,14 +125,14 @@ func end
   $in minecraft:overworld run spawnpoint @a 0 100 0 0
 end
 
-func announce_moon
-  title @a subtitle {"text":"~0.0026AU away","color":"gold"}
-  title @a title {"text":"The Moon","color":"green"}
+tmpl announce no name distance
+  $if score Mission State matches $no run title @a subtitle {"text":"~ $distance AU away","color":"gold"}
+  $if score Mission State matches $no run title @a title {"text":"$name","color":"green"}
 end
 
-func announce_mars
-  title @a subtitle {"text":"~0.3646AU away","color":"gold"}
-  title @a title {"text":"Mars","color":"green"}
+func announce
+  \announce($mission_moon, The Moon, 0.0026)
+  \announce($mission_mars, Mars, 0.3646)
 end
 
 const
@@ -159,14 +162,14 @@ func prev
   call update_title
 end
 
+tmpl mission_title no name color flavor head
+  $if score Mission State matches $no run data modify entity $MissionTitle CustomName set value '{"text":"$name","color":"$color"}'
+  $if score Mission State matches $no run data modify entity $MissionDistance CustomName set value '{"text":"$flavor","color":"green"}'
+  $if score Mission State matches $mission_earth run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head}
+end
+
 func update_title
-  $if score Mission State matches $mission_earth run data modify entity $MissionTitle CustomName set value '{"text":"Earth","color":"green"}'
-  $if score Mission State matches $mission_earth run data modify entity $MissionDistance CustomName set value '{"text":"You are here!","color":"green"}'
-  $if score Mission State matches $mission_earth run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_earth}
-  $if score Mission State matches $mission_moon run data modify entity $MissionTitle CustomName set value '{"text":"Moon","color":"gray"}'
-  $if score Mission State matches $mission_moon run data modify entity $MissionDistance CustomName set value '{"text":"450L fuel required","color":"green"}'
-  $if score Mission State matches $mission_moon run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_moon}
-  $if score Mission State matches $mission_mars run data modify entity $MissionTitle CustomName set value '{"text":"Mars","color":"red"}'
-  $if score Mission State matches $mission_mars run data modify entity $MissionDistance CustomName set value '{"text":"1350L fuel required","color":"green"}'
-  $if score Mission State matches $mission_mars run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head_mars}
+  \mission_title($mission_earth, Earth, green, You are here!, $head_earth)
+  \mission_title($mission_moon, The Moon, gray, 450L fuel required, $head_moon)
+  \mission_title($mission_mars, Mars, red, 1350L fuel required, $head_mars)
 end
