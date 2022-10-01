@@ -74,6 +74,10 @@ func init
   $in gcv:moon run forceload add 0 0
   $in gcv:mars run forceload add 0 0
 
+  $in minecraft:overworld run kill @e[tag=PersistentSpawn]
+  $in gcv:mars run kill @e[tag=PersistentSpawn]
+  $in gcv:mars run kill @e[tag=PersistentSpawn]
+
   title @a times 30 60 30
 
   $sodis sidebar Rocket

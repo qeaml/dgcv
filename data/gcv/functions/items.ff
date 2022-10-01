@@ -1,0 +1,45 @@
+tmpl custom_item tag name lore
+  minecraft:armor_stand{EntityTag:{Invisible:1b,Small:1b,Tags:["$tag"]},display:{Name:'{"text":$name,"italic":false}',Lore:['$lore']}}
+end
+
+const
+  item_landmark = \custom_item(LandmarkSpawner, "Landmark", "Place this to mark your landing spot for future missions.")
+end
+
+func give_landmark
+  $grant $item_landmark
+end
+
+func tick
+  $at @e[tag=LandmarkSpawner] run kill @e[tag=PersistentSpawn]
+  $at @e[tag=LandmarkSpawner] run summon marker ~ ~ ~ {Tags:["PersistentSpawn"]}
+  $at @e[tag=LandmarkSpawner] run forceload add ~ ~
+  kill @e[tag=LandmarkSpawner]
+
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 0.75 ~ ~0.1 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 0.75 ~ ~0.2 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1 ~ ~0.3 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1 ~ ~0.4 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.25 ~ ~0.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.25 ~ ~0.7 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.5 ~ ~0.9 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.5 ~ ~1.2 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.75 ~ ~1.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 1.75 ~ ~2.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2 ~ ~2.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2 ~ ~3.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.25 ~ ~3.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.25 ~ ~4.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.5 ~ ~4.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.5 ~ ~5.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.75 ~ ~5.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 2.75 ~ ~6.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.0 ~ ~6.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.0 ~ ~7.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.25 ~ ~7.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.25 ~ ~8.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.5 ~ ~8.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.5 ~ ~9.0 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.75 ~ ~9.5 ~ 0 0 0 5 1
+  $at @e[tag=PersistentSpawn] run particle minecraft:dust 1 0 0 3.75 ~ ~10.0 ~ 0 0 0 5 1
+end

@@ -1,6 +1,7 @@
 {
   "values": [
-    "gcv:oxy/tick"
+    "gcv:oxy/tick",
+    "gcv:items/tick"
   ],
   "replace": false
 }
