@@ -3,7 +3,7 @@ import string
 import os
 import getopt
 
-SUBSTITUTE_CHARS = string.ascii_letters+"_.-$"
+SUBSTITUTE_CHARS = string.ascii_letters+"_-$"
 
 def main(args: list[str]) -> int:
   print("ff v1.0")
@@ -204,7 +204,7 @@ def parse_tmpl(li) -> (str, str):
   for _, ln, _ in li:
     match ln.split(" "):
       case ["end"]:
-        return ("\n".join(lines)+"\n", "")
+        return ("\n".join(lines), "")
       case _:
         lines += [ln]
 

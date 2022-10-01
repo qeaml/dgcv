@@ -1,19 +1,20 @@
+tmpl start_check cond fail_msg
+  \match(State, Check, 1) unless $cond run $spset Check State 0
+  \match(State, Check, 1) unless $cond run title @p actionbar {"text":$fail_msg,"color":"red"}
+end
+
 func start
   call rocket/recalculate
-  $unless score FuelUsage Rocket > Fuel Rocket run $spadd Check State 1
-  $if score FuelUsage Rocket > Fuel Rocket run title @p actionbar {"text":"Not enough fuel.","color":"red"}
-  $if score Mission State matches $mission_earth run $spset Check State 0
-  $if score Mission State matches $mission_earth run title @p actionbar {"text":"Earth is selected.","color":"red"}
-  $if score OnMission State matches 1 run $spset Check State 0
-  $if score OnMission State matches 1 run title @p actionbar {"text":"A mission is already in progress.","color":"red"}
-  $if score Check State matches 1.. run function gcv:mission/process_start
-  $unless score Check State matches 1.. run $log "mission: Checks failed"
-  $spset Check State 0
+  $spset Check State 1
+  \start_check(score FuelUsage Rocket <= Fuel Rocket, "Not enough fuel.")
+  \start_check(score Mission State matches $mission_moon.., "Earth is selected.")
+  \start_check(score OnMission State matches 0, "A mission is already in progress.")
+  \match(State, Check, 1) run function gcv:mission/process_start
 end
 
 const
-  moon_mission = $if score Mission State matches $mission_moon in gcv:moon
-  mars_mission = $if score Mission State matches $mission_mars in gcv:mars
+  moon_mission = \match(State, Mission, $mission_moon) in gcv:moon
+  mars_mission = \match(State, Mission, $mission_mars) in gcv:mars
 
   players_earth = @a[$gamers,nbt={Dimension:"minecraft:overworld"}]
   players_space = @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}]
@@ -91,7 +92,7 @@ func tick
 
   title @a[$gamers,nbt=!{Dimension:"minecraft:overworld"}] actionbar [{"score":{"name":"*","objective":"Oxy"},"color":"$clr_oxy"},{"text":" $txt_oxy"}]
 
-  $if score OnMission State matches 1 run schedule function gcv:mission/tick 5t
+  \match(State, OnMission, 1) run schedule function gcv:mission/tick 5t
 end
 
 func end
@@ -126,8 +127,8 @@ func end
 end
 
 tmpl announce no name distance
-  $if score Mission State matches $no run title @a subtitle {"text":"~$distance AU away","color":"gold"}
-  $if score Mission State matches $no run title @a title {"text":"$name","color":"green"}
+  \match(State, Mission, $no) run title @a subtitle {"text":"~$distance AU away","color":"gold"}
+  \match(State, Mission, $no) run title @a title {"text":"$name","color":"green"}
 end
 
 func announce
@@ -152,20 +153,20 @@ end
 
 func next
   $spadd Mission State 1
-  $if score Mission State matches $mission_max run $spset Mission State 0
+  \match(State, Mission, $mission_max) run $spset Mission State 0
   call update_title
 end
 
 func prev
   $sprem Mission State 1
-  $if score Mission State matches -1 run $spset Mission State $mission_last
+  \match(State, Mission, -1) run $spset Mission State $mission_last
   call update_title
 end
 
 tmpl mission_title no name color flavor head
-  $if score Mission State matches $no run data modify entity $MissionTitle CustomName set value '{"text":"$name","color":"$color"}'
-  $if score Mission State matches $no run data modify entity $MissionDistance CustomName set value '{"text":"$flavor","color":"green"}'
-  $if score Mission State matches $no run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head}
+  \match(State, Mission, $no) run data modify entity $MissionTitle CustomName set value '{"text":"$name","color":"$color"}'
+  \match(State, Mission, $no) run data modify entity $MissionDistance CustomName set value '{"text":"$flavor","color":"green"}'
+  \match(State, Mission, $no) run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head}
 end
 
 func update_title

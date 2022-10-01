@@ -6,3 +6,7 @@ const
 
   log = tellraw @a[tag=Log]
 end
+
+tmpl match ns var val
+  $if score $var $ns matches $val
+end
