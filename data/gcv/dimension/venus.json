@@ -1,0 +1,11 @@
+{
+  "type": "gcv:venus_like",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "gcv:venus_ns",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "gcv:venusian_mainlands"
+    }
+  }
+}
