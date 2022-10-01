@@ -126,7 +126,7 @@ func end
 end
 
 tmpl announce no name distance
-  $if score Mission State matches $no run title @a subtitle {"text":"~ $distance AU away","color":"gold"}
+  $if score Mission State matches $no run title @a subtitle {"text":"~$distance AU away","color":"gold"}
   $if score Mission State matches $no run title @a title {"text":"$name","color":"green"}
 end
 
@@ -165,7 +165,7 @@ end
 tmpl mission_title no name color flavor head
   $if score Mission State matches $no run data modify entity $MissionTitle CustomName set value '{"text":"$name","color":"$color"}'
   $if score Mission State matches $no run data modify entity $MissionDistance CustomName set value '{"text":"$flavor","color":"green"}'
-  $if score Mission State matches $mission_earth run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head}
+  $if score Mission State matches $no run data modify entity @e[tag=MissionTitle,limit=1] ArmorItems[3] set value {id:"minecraft:player_head",Count:1b,tag:$head}
 end
 
 func update_title
