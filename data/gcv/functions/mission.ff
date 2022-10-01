@@ -1,6 +1,6 @@
 tmpl start_check cond fail_msg
-  \match(State, Check, 1) unless $cond run $spset Check State 0
   \match(State, Check, 1) unless $cond run title @p actionbar {"text":$fail_msg,"color":"red"}
+  \match(State, Check, 1) unless $cond run $spset Check State 0
 end
 
 func start
