@@ -50,7 +50,8 @@ func process_start
 
   spreadplayers 0 0 16 16 false @e[tag=TempSpawn]
   $at @e[tag=Spawnpoint] run spawnpoint @a ~ ~ ~ 0
-  $at @e[tag=Spawnpoint] run tp @a ~ 200 ~ 0 89
+  $at @e[tag=Spawnpoint] run spreadplayers ~ ~ 16 1 false @a 
+  $at @a run tp @p ~ 200 ~ 0 89
   effect give @a slow_falling 10 0 true
   tag @a add Falling
 
